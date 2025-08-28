@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "esp_log.h": "c",
+        "gpio.h": "c",
+        "task.h": "c",
+        "esp_err.h": "c",
+        "ledc.h": "c",
+        "h_bridge.h": "c",
+        "format": "c",
+        "array": "c",
+        "algorithm": "c",
+        "random": "c",
+        "numeric": "c",
+        "math.h": "c"
+    }
+}

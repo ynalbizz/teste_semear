@@ -3,32 +3,31 @@
 #include "pid.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
+
+// Add function prototype if not present in pid.h
 #include "freertos/task.h"
+#include "h_bridge.h"
+#include "encoder.h"
 
 //Main function
 void app_main() {
     //Initialize H-Bridge
-    //init_h_bridge();
-    
-
-int meta, b = 0;
-srandom(1234);
-meta = (int)random();
-int erro =(meta - b);
-ESP_LOGI("TESTE", "Meta: %d", meta);
-
-//Initialize PID with Kp, Ki, Kd
-pid_ctrl_block_handle_t pid = init_pid(1.0, 0.1, 0.01);
-
-while (1)
-{
-    //Function to compute PID
-    float output;
-    pid_compute(pid, erro, &output);
-    ESP_LOGI("TESTE", "Output: %f", output);
-
-
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    init_h_bridge();
+    //Initialize Encoder
+    pcnt_unit_handle_t pcnt = init_encoder(ENC_LEFT);
+    //Initialize PID
+    pid_ctrl_block_handle_t pid = init_pid(LEFT);
+    int output = 0;
+    //Main loop
+    while (1)
+    {
+        //Apply PID control
+        pid_apply(pid, 25.0f, pcnt, &output);
+        //Set motor speed
+        update_motor(LEFT, output);
+        //Log output
+        ESP_LOGI("MAIN", "Output: %d", output);
     }
+    
 }
 

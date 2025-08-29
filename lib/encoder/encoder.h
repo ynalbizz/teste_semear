@@ -7,7 +7,10 @@
 #include "driver/gpio.h"
 #include "driver/ledc.h"
 #include "esp_log.h"
+#include "freertos/FreeRTOS.h"
 
+// Tag for logging
+#define TAG_ENCODER = "Encoder"
 /* PCNT Limits */
 #define PCNT_HIGH_LIMIT 1500
 #define PCNT_LOW_LIMIT  -1500
@@ -17,7 +20,7 @@
 #define CHA_ENCODER_2R 19
 
 /* Left encoder defines */
-#define CHA_ENCODER_1L 4
+#define CHA_ENCODER_1L 13
 #define CHA_ENCODER_2L 14
 
 
@@ -37,8 +40,6 @@ ENC_RIGHT = 1
 pcnt_unit_handle_t init_encoder(encoder_side_t cha_encoder);
 float pulse_count(pcnt_unit_handle_t encoder);
 
-// Tag for logging
-const char *TAG_ENCODER = "Encoder";
 
 
 #endif // ENCODER_H

@@ -13,6 +13,8 @@ void init_gpio()
     
     gpio_set_direction(LEDC_OUTPUT_RIGHT, GPIO_MODE_OUTPUT);
     gpio_set_direction(LEDC_OUTPUT_LEFT, GPIO_MODE_OUTPUT);
+    gpio_set_direction(STANDBY, GPIO_MODE_OUTPUT);
+    gpio_set_level(STANDBY, 1); // Enable the H-Bridge
 }
 void init_pwm()
 {

@@ -18,7 +18,6 @@ void init_gpio()
 }
 void init_pwm()
 {
-
     /*Verificar Problemas De Redefinição em Caso de Modularização de Código
     "Se eu chamar essa função mais de uma vez, o que acontecer? ela vai ferrar com o timer?
     ... Valeria pena iniciar o Timer do PWM primerio dps os canais?"

@@ -2,15 +2,17 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 //includes
-#include "driver/pulse_cnt.h"
-#include "esp_err.h"
-#include "driver/gpio.h"
-#include "driver/ledc.h"
-#include "esp_log.h"
+#include "driver/pulse_cnt.h" //biblioteca pulse count para o encoder
+#include "sdkconfig.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "esp_log.h"
+#include "driver/pulse_cnt.h"
+#include "driver/gpio.h"
+#include "esp_sleep.h" //biblioteca para gerenciamento de energia
 
-// Tag for logging
-#define TAG_ENCODER = "Encoder"
+
 /* PCNT Limits */
 #define PCNT_HIGH_LIMIT 1500
 #define PCNT_LOW_LIMIT  -1500

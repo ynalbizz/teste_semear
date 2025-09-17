@@ -2,6 +2,7 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 //includes
+#include "esp_err.h"
 #include "driver/pulse_cnt.h" //biblioteca pulse count para o encoder
 #include "sdkconfig.h"
 #include "freertos/FreeRTOS.h"

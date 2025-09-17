@@ -27,6 +27,7 @@ void app_main() {
         update_motor(LEFT, output);
         //Log output
         ESP_LOGI("MAIN", "Output: %d", output);
+        // Parte da comunicação ta feita (Tanto o .h quanto o .c) so n implementei aqui :P
     }
     
 }

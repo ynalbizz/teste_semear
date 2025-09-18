@@ -41,7 +41,7 @@ typedef enum {
 
 //Function prototypes
 void init_h_bridge(void);
-void init_gpio(void);
+void init_gpio(motor_side_t motor);
 void init_pwm(void);
 esp_err_t _set_forward(motor_side_t motor);
 esp_err_t _set_backward(motor_side_t motor);

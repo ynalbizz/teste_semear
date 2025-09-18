@@ -1,22 +1,23 @@
 #include "h_bridge.h"
 
-void init_gpio()
+void init_gpio(motor_side_t motor)
 {
-    // GPIO modes H-Bridge(direction of motors)
-    // Motor 1:
-    gpio_set_direction(INPUT_LEFT_1, GPIO_MODE_OUTPUT);
-    gpio_set_direction(INPUT_LEFT_2, GPIO_MODE_OUTPUT);
+    if(motor == LEFT){
+        gpio_set_direction(INPUT_LEFT_1, GPIO_MODE_OUTPUT);
+        gpio_set_direction(INPUT_LEFT_2, GPIO_MODE_OUTPUT);
+        gpio_set_direction(LEDC_OUTPUT_LEFT, GPIO_MODE_OUTPUT);
+    }
     
-    // Motor 2:
-    gpio_set_direction(INPUT_RIGHT_1, GPIO_MODE_OUTPUT);
-    gpio_set_direction(INPUT_RIGHT_2, GPIO_MODE_OUTPUT);
-    
-    gpio_set_direction(LEDC_OUTPUT_RIGHT, GPIO_MODE_OUTPUT);
-    gpio_set_direction(LEDC_OUTPUT_LEFT, GPIO_MODE_OUTPUT);
+    if(motor == RIGHT){
+        gpio_set_direction(INPUT_RIGHT_1, GPIO_MODE_OUTPUT);
+        gpio_set_direction(INPUT_RIGHT_2, GPIO_MODE_OUTPUT);
+        gpio_set_direction(LEDC_OUTPUT_RIGHT, GPIO_MODE_OUTPUT);
+        
+    }
     gpio_set_direction(STANDBY, GPIO_MODE_OUTPUT);
     gpio_set_level(STANDBY, 1); // Enable the H-Bridge
 }
-void init_pwm()
+void init_pwm(motor_side_t motor)
 {
     /*Verificar Problemas De Redefinição em Caso de Modularização de Código
     "Se eu chamar essa função mais de uma vez, o que acontecer? ela vai ferrar com o timer?
@@ -24,7 +25,7 @@ void init_pwm()
     */ 
 
     // Configuração do timer do LEDC
-    ledc_timer_config_t ledc_timer = {
+    static ledc_timer_config_t ledc_timer = {
         .speed_mode = LEDC_MODE,
         .timer_num = LEDC_TIMER,
         .duty_resolution = LEDC_DUTY_RES,
@@ -34,35 +35,38 @@ void init_pwm()
     ledc_timer_config(&ledc_timer);
 
     // Configuração dos canais do LEDC
-    // Canal para o motor esquerdo
-    ledc_channel_config_t ledc_left_channel = {
-        .speed_mode = LEDC_MODE,
-        .channel = LEDC_CHANNEL_LEFT,
-        .timer_sel = LEDC_TIMER,
-        .intr_type = LEDC_INTR_DISABLE,
-        .gpio_num = LEDC_OUTPUT_LEFT,
-        .duty = 0,  // Set duty to 0%
-        .hpoint = 0,
-    };
-    ledc_channel_config(&ledc_left_channel);
+    if(motor == LEFT){
+        ledc_channel_config_t ledc_left_channel = {
+            .speed_mode = LEDC_MODE,
+            .channel = LEDC_CHANNEL_LEFT,
+            .timer_sel = LEDC_TIMER,
+            .intr_type = LEDC_INTR_DISABLE,
+            .gpio_num = LEDC_OUTPUT_LEFT,
+            .duty = 0,  // Set duty to 0%
+            .hpoint = 0,
+        };
+        ledc_channel_config(&ledc_left_channel);
+    }
 
-    // Canal para o motor direito
-    ledc_channel_config_t ledc_right_channel = {
-        .speed_mode = LEDC_MODE,
-        .channel = LEDC_CHANNEL_RIGHT,
-        .timer_sel = LEDC_TIMER,
-        .intr_type = LEDC_INTR_DISABLE,
-        .gpio_num = LEDC_OUTPUT_RIGHT,
-        .duty = 0,  // Set duty to 0%
-        .hpoint = 0
-    };
-    ledc_channel_config(&ledc_right_channel);
+    if(motor == RIGHT){
+        // Canal para o motor direito
+        ledc_channel_config_t ledc_right_channel = {
+            .speed_mode = LEDC_MODE,
+            .channel = LEDC_CHANNEL_RIGHT,
+            .timer_sel = LEDC_TIMER,
+            .intr_type = LEDC_INTR_DISABLE,
+            .gpio_num = LEDC_OUTPUT_RIGHT,
+            .duty = 0,  // Set duty to 0%
+            .hpoint = 0
+        };
+        ledc_channel_config(&ledc_right_channel);
+    }
 }
 
-void init_h_bridge()
+void init_h_bridge(motor_side_t motor)
 {
-    init_gpio();
-    init_pwm();
+    init_gpio(motor);
+    init_pwm(motor);
 }
 
 esp_err_t _set_forward(motor_side_t motor)

@@ -12,7 +12,8 @@
 //Main function
 void app_main() {
     //Initialize H-Bridge
-    init_h_bridge();
+    init_h_bridge(LEFT);
+    init_h_bridge(RIGHT);
     //Initialize Encoder
     pcnt_unit_handle_t pcnt = init_encoder(ENC_LEFT);
     //Initialize PID

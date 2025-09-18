@@ -14,9 +14,10 @@
 #include "esp_log.h"
 
 //Some Macros
-#define KC 0.0015 //constant to convert pulse count to cm (depends on the wheel and encoder)
+#define KC (3.141592653*2*(1000/DELAY))/1321//constant to convert pulse count to cm (depends on the wheel and encoder)
+#define KC_TESTE 0.0475638
 
-#define KP_R 1
+#define KP_R 1 
 #define KI_R 0
 #define KD_R 0
 #define MAX_OUTPUT_R 1023 

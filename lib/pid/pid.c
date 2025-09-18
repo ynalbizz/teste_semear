@@ -24,15 +24,18 @@ pid_ctrl_block_handle_t init_pid(motor_side_t motor){
     return pid;
 }
 void limite_PWM(int *val){
-    if(*val > 2047) *val = 2047;
-    if(*val < -2047) *val = -2047;
+    if(*val > 1023) *val = 1023;
+    if(*val < -1023) *val = -1023;
 }
 
 esp_err_t pid_apply(pid_ctrl_block_handle_t pid, float setpoint, pcnt_unit_handle_t encoder, int *output){
-    float measurement = pulse_count(encoder)*KC; //leitura do encoder
-    float erro = setpoint - measurement; //calculo do erro
     float pid_output = 0.0f;
+    //float measurement = pulse_count(encoder)*KC; //leitura do encoder
+    //float erro = setpoint - measurement; //calculo do erro
+    float erro = setpoint/KC_TESTE - pulse_count(encoder); //calculo do erro
+    
     ESP_ERROR_CHECK(pid_compute(pid, erro, &pid_output)); //calculo do pid
+    //ESP_LOGI("DEBUGING","PID_OUT:  %f ",pid_output);
     *output += (int)pid_output; //conversao do output do pid para int
     limite_PWM(output); //limita o valor do pwm
     return ESP_OK;

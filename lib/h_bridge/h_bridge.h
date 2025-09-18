@@ -9,8 +9,8 @@
 #include "esp_log.h"
 
 // GPIOs of h-bridge for left motor
-#define INPUT_RIGHT_1   GPIO_NUM_15
-#define INPUT_RIGHT_2   GPIO_NUM_13
+#define INPUT_RIGHT_1   GPIO_NUM_0
+#define INPUT_RIGHT_2   GPIO_NUM_0
 #define INPUT_LEFT_1    GPIO_NUM_25
 #define INPUT_LEFT_2    GPIO_NUM_33
 #define STANDBY        GPIO_NUM_32
@@ -40,9 +40,9 @@ typedef enum {
 #define MOTOR_CHANNEL(MOTOR) ((MOTOR) == (LEFT) ? LEDC_CHANNEL_LEFT : LEDC_CHANNEL_RIGHT)
 
 //Function prototypes
-void init_h_bridge(void);
+void init_h_bridge(motor_side_t motor);
 void init_gpio(motor_side_t motor);
-void init_pwm(void);
+void init_pwm(motor_side_t motor);
 esp_err_t _set_forward(motor_side_t motor);
 esp_err_t _set_backward(motor_side_t motor);
 esp_err_t set_speed(motor_side_t motor, uint8_t speed);

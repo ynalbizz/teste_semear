@@ -22,12 +22,15 @@ void app_main() {
     //Main loop
     while (1)
     {
+        //ESP_LOGI("MAIN", "Output: %d", output);
         //Apply PID control
-        pid_apply(pid, 25.0f, pcnt, &output);
+        //pid_apply(pid,6.283185, pcnt, &output);
         //Set motor speed
-        update_motor(LEFT, output);
+        //update_motor(LEFT, output);
+        update_motor(LEFT, 256);
         //Log output
-        ESP_LOGI("MAIN", "Output: %d", output);
+        //update_motor(LEFT,1023);
+        //pulse_count(pcnt);
         // Parte da comunicação ta feita (Tanto o .h quanto o .c) so n implementei aqui :P
     }
     

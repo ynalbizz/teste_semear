@@ -17,6 +17,13 @@
         "pulse_cnt.h": "c",
         "cominicacao.h": "c",
         "queue.h": "c",
-        "uart.h": "c"
+        "uart.h": "c",
+        "string": "c",
+        "string_view": "c",
+        "span": "c",
+        "encoder.h": "c",
+        "stdbool.h": "c",
+        "functional": "c",
+        "numbers": "c"
     }
 }

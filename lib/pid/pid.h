@@ -41,7 +41,23 @@
 #define max_integral(SIDE) (SIDE == RIGHT)? MAX_INTEGRAL_R : MAX_INTEGRAL_L
 #define min_integral(SIDE) (SIDE == RIGHT)? MIN_INTEGRAL_R : MIN_INTEGRAL_L
 
+/**
+ *@brief Inicializa o PID para Cada Motor
+ *
+ *@param motor Lado do motor
+ *@return Manipulador do PID - (Handle)
+*/
 pid_ctrl_block_handle_t init_pid(motor_side_t motor);
+
+/**
+ * @brief Aplica o pid
+ * 
+ * Essa função é a responsavel por aplicar o pid e retornar o seu output
+ * @param pid manipulador do pid
+ * @param setpoint velocidade alvo (rads/s)
+ * @param pcnt manipulador do encoder
+ * @param output endereço da variavel para que vai receber a saida do PID
+ */
 esp_err_t pid_apply(pid_ctrl_block_handle_t pid, float setpoint, pcnt_unit_handle_t pcnt, int *output);
 
 

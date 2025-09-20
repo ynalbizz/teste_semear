@@ -15,32 +15,37 @@ void init_com(){
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE
     };
     ESP_ERROR_CHECK(uart_param_config(PORT_NUM, &uart_config));
-
-    //Setando os pinos da comunicação
-    ESP_ERROR_CHECK(uart_set_pin(PORT_NUM,TX_PIN,RX_PIN,UART_PIN_NO_CHANGE,UART_PIN_NO_CHANGE));
 }
 
+/**
+ * 
+ *@brief Recebe uma string e envia ela para porta serial. 
+ *
+ *@param string String que sera enviada para porta serial
+ *@return Não retorna nada para o usuario
+ *
+ *@note Prefereivel usar ESP_LOGI
+*/
 void send_data(char* string){
 uart_write_bytes(PORT_NUM, string, strlen(string));
+uart_write_bytes(PORT_NUM,"\n", 1);
 }
 
-// Read data from UART.
-void read_data(){
-    // Read data from UART.
-    uint8_t data[BUFFER_SIZE];
-    int len = 0;
-    len = uart_read_bytes(PORT_NUM, data, BUFFER_SIZE-1, 100 / portTICK_PERIOD_MS);
-    if (len > 0) {
-        data[len] = '\0';  // Garante que o buffer de dados seja uma string válida
-        // Converte os dados para string e separa em dois valores
-        char *token = strtok((char *)data, ",");  // Primeiro valor antes da vírgula
-        if (token != NULL) {
-           float motor_1 = atof(token);  // Converte para float
-        }
+/**
+ * 
+ *@brief Recebe um Espaço pra escrever uma string de ate 1024 caracteres e Prenche esse espaço 
+ * 
+ *A função read_data lê dados da serial e os armazena em um buffer interno(placeholder), garantindo que os dados sejam terminados em nulo, e os copia para o buffer externo fornecido, que deve ter espaço para até 1.024 caracteres. 
+ *Ela usa uart_read_bytes para ler os dados da serial e assume que o chamador fornece um endereço de memória 
+ *válido para o parâmetro data.
+ *@param data Buffer externo cujo será armazernado a leitura final da serial
+*/
+void read_data(char *data) {
+    uint8_t placeholder[BUFFER_SIZE];
+    int len = uart_read_bytes(PORT_NUM, placeholder, BUFFER_SIZE - 1, 100 / portTICK_PERIOD_MS);
 
-        token = strtok(NULL, ",");  // Segundo valor depois da vírgula
-        if (token != NULL) {
-           float motor_2 = atof(token);  // Converte para float
-        }
+    if (len > 0) {
+        placeholder[len] = '\0';               // garante string válida
+        strcpy(data, (char*)placeholder);    // copia para o buffer externo
     }
 }

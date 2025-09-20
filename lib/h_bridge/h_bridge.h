@@ -24,7 +24,7 @@
 #define LEDC_CHANNEL_RIGHT  LEDC_CHANNEL_1
 #define LEDC_TIMER          LEDC_TIMER_0
 #define LEDC_MODE           LEDC_LOW_SPEED_MODE
-#define LEDC_DUTY_RES      LEDC_TIMER_8_BIT // Set duty resolution to 8 bits
+#define LEDC_DUTY_RES      LEDC_TIMER_10_BIT // Set duty resolution to 13 bits
 #define LEDC_FREQ_HZ       500                // Frequency in Hertz.
 
 //Enum for motor side
@@ -40,12 +40,44 @@ typedef enum {
 #define MOTOR_CHANNEL(MOTOR) ((MOTOR) == (LEFT) ? LEDC_CHANNEL_LEFT : LEDC_CHANNEL_RIGHT)
 
 //Function prototypes
+
+/** 
+ *@brief inicializa e toda a ponte H
+ *
+ *@param motor Lado do motor
+ *@note Tambem inicializa e configura o GPIO e PWM 
+ *que a Ponte H usa.*/
 void init_h_bridge(motor_side_t motor);
+
+/** 
+ *@brief inicializa o GPIO para cada motor
+ *
+ *@param motor Lado do motor*/
 void init_gpio(motor_side_t motor);
+
+/** 
+ *@brief inicializa o PWM de cada motor
+ *
+ *@param motor Lado do motor*/
 void init_pwm(motor_side_t motor);
+
+/** 
+ *@brief Muda a rotação do motor para "Forward"/"Frente"
+ *
+ *@param motor Lado do motor*/
 esp_err_t _set_forward(motor_side_t motor);
+
+/** 
+ *@brief Muda a rotação do motor para "backward"/"Traz"
+ *
+ *@param motor Lado do motor*/
 esp_err_t _set_backward(motor_side_t motor);
-esp_err_t set_speed(motor_side_t motor, uint8_t speed);
+
+/** 
+ * @brief Atualiza o PWM que controla a velocidade de rotação do motor
+ * @param motor Lado do motor
+ * @param u novo valor do pwm
+*/
 esp_err_t update_motor(motor_side_t motor, int u);
 
 #endif // H_BRIDGE_H

@@ -89,9 +89,9 @@ esp_err_t _set_backward(motor_side_t motor)
 esp_err_t update_motor(motor_side_t motor, int u)
 {
 
-    if(u > 0) {
+    if(u < 0) {
         _set_forward(motor);
-    } else if (u < 0) {
+    } else if (u > 0) {
         _set_backward(motor);
     }
 

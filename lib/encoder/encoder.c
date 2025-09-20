@@ -2,6 +2,11 @@
 
 const char *TAG_ENCODER = "ENCODER";
 
+/** 
+ *@brief inicializa e configura o enconder
+ *
+ *@param cha_encoder Lado do encoder
+ *@return Manipulador do encoder*/
 pcnt_unit_handle_t init_encoder(encoder_side_t cha_encoder){ 
 
     //allocate pcnt unit handle
@@ -67,7 +72,14 @@ pcnt_unit_handle_t init_encoder(encoder_side_t cha_encoder){
     return selected_encoder;
 }
 
-// Function to get the pulse count and reset it
+
+/** 
+*
+*@brief Conta quantos pulsos ocorreram em 50ms 
+*
+*@param encoder o Manipulador do enconder
+*@return Quantidade de Pulsos em 50ms
+*/
 float pulse_count(pcnt_unit_handle_t encoder){
     int pulse_count = 0;
     

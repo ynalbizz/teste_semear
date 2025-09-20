@@ -25,7 +25,7 @@
 /* Left encoder defines */
 #define CHA_ENCODER_1L 13
 #define CHA_ENCODER_2L 14
-#define DELAY 100
+#define DELAY 50
 
 /* Enum */
 typedef enum {
@@ -40,6 +40,7 @@ ENC_RIGHT = 1
 #define ENCODER_INPUT_B(NUM) NUM == (ENC_RIGHT) ? CHA_ENCODER_2R : CHA_ENCODER_2L
 
 //Function prototypes
+
 pcnt_unit_handle_t init_encoder(encoder_side_t cha_encoder);
 float pulse_count(pcnt_unit_handle_t encoder);
 
